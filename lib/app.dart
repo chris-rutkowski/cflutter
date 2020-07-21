@@ -11,7 +11,11 @@ class App extends StatelessWidget {
   final ThemeData theme;
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-  App({Key key, this.home, this.theme}) : super(key: key);
+  App({
+    Key key,
+    @required this.home,
+    @required this.theme,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
