@@ -25,6 +25,8 @@ class ImageAccessory implements Accessory {
 }
 
 class Cell extends StatelessWidget {
+  static var headerToBodyMargin = small;
+
   final String header;
   final String body;
   final int bodyMaxLines;
@@ -44,11 +46,9 @@ class Cell extends StatelessWidget {
 
   Widget _buildAccessory(BuildContext context) {
     if (accessory is ChevronAccessory) {
-      final textTheme = Theme.of(context).textTheme.headline3;
-
       return Icon(
         Icons.chevron_right,
-        size: textTheme.fontSize * (textTheme.height ?? 1),
+        size: 28,
       );
     } else if (accessory is ImageAccessory) {
       return Image(image: (accessory as ImageAccessory).imageProvider);
@@ -56,13 +56,17 @@ class Cell extends StatelessWidget {
       final radioAccessory = accessory as RadioAccessory;
       return Stack(
         children: <Widget>[
-          Radio(
-            value: radioAccessory.checked,
-            groupValue: true,
-            onChanged: (_) {
-              if (onTap == null) return;
-              onTap();
-            },
+          Container(
+            width: 18,
+            height: 18,
+            child: Radio(
+              groupValue: true,
+              value: radioAccessory.checked,
+              onChanged: (_) {
+                if (onTap == null) return;
+                onTap();
+              },
+            ),
           ),
           // hidden text widget for UI Tests
           Container(
@@ -79,12 +83,16 @@ class Cell extends StatelessWidget {
       final checkboxAccessory = accessory as CheckboxAccessory;
       return Stack(
         children: <Widget>[
-          Checkbox(
-            value: checkboxAccessory.checked,
-            onChanged: (_) {
-              if (onTap == null) return;
-              onTap();
-            },
+          Container(
+            width: 18,
+            height: 18,
+            child: Checkbox(
+              value: checkboxAccessory.checked,
+              onChanged: (_) {
+                if (onTap == null) return;
+                onTap();
+              },
+            ),
           ),
           // hidden text widget for UI Tests
           Container(
@@ -158,7 +166,7 @@ class Cell extends StatelessWidget {
     }
 
     return [
-      SizedBox(height: small),
+      SizedBox(height: headerToBodyMargin),
       Text(
         body,
         maxLines: bodyMaxLines,
