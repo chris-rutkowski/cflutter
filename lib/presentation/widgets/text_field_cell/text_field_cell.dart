@@ -22,6 +22,8 @@ class TextFieldCell extends StatefulWidget {
   final int maxLines;
   final bool displayCharacterCounter;
   final bool obscureText;
+  final ValueChanged<String> onSubmitted;
+  final bool autocorrect;
 
   TextFieldCell({
     Key key,
@@ -42,6 +44,8 @@ class TextFieldCell extends StatefulWidget {
     this.maxLines = 1,
     this.displayCharacterCounter = false,
     this.obscureText = false,
+    this.onSubmitted,
+    this.autocorrect = true,
   }) : super(key: key);
 
   @override
@@ -149,6 +153,8 @@ class _TextFieldCellState extends State<TextFieldCell> {
       onChanged: widget.onChanged,
       maxLines: widget.maxLines,
       obscureText: widget.obscureText,
+      onSubmitted: widget.onSubmitted,
+      autocorrect: widget.autocorrect,
     );
 
     children.addAll([
