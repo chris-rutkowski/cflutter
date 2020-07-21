@@ -1,0 +1,1 @@
+enum Appearance { visit, leave }

@@ -1,0 +1,24 @@
+name: cflutter
+description: A new Flutter package.
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  cupertino_icons:
+  data_connection_checker:
+  dio:
+  equatable:
+  flutter:
+    sdk: flutter
+  flutter_spinkit:
+  provider:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
