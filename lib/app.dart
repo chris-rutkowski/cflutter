@@ -9,7 +9,6 @@ import 'presentation/widgets/processing_view.dart';
 class App extends StatelessWidget {
   final Widget home;
   final ThemeData theme;
-  final _navigatorKey = GlobalKey<NavigatorState>();
 
   App({
     Key key,
@@ -26,11 +25,11 @@ class App extends StatelessWidget {
           lazy: false,
         ),
         Provider(
-          create: (_) => NavigatorService(_navigatorKey),
+          create: (_) => NavigatorService(),
         )
       ],
       child: MaterialApp(
-        navigatorKey: _navigatorKey,
+        navigatorKey: NavigatorService.navigatorKey,
         navigatorObservers: [appearanceRouteObserver],
         builder: (context, navigator) {
           return Theme(

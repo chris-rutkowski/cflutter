@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NavigatorService {
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  NavigatorService(this.navigatorKey);
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   Future<dynamic> push(Widget widget) {
     return navigatorKey.currentState.push(
