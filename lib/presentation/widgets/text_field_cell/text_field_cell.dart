@@ -24,6 +24,7 @@ class TextFieldCell extends StatefulWidget {
   final bool obscureText;
   final ValueChanged<String> onSubmitted;
   final bool autocorrect;
+  final TextInputAction textInputAction;
 
   TextFieldCell({
     Key key,
@@ -46,6 +47,7 @@ class TextFieldCell extends StatefulWidget {
     this.obscureText = false,
     this.onSubmitted,
     this.autocorrect = true,
+    this.textInputAction,
   }) : super(key: key);
 
   @override
@@ -155,6 +157,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
       obscureText: widget.obscureText,
       onSubmitted: widget.onSubmitted,
       autocorrect: widget.autocorrect,
+      textInputAction: widget.textInputAction,
     );
 
     children.addAll([
