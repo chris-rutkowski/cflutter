@@ -41,11 +41,16 @@ class ScreenScaffold extends StatelessWidget {
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: Builder(
         builder: (context) => ElevatedOnScrollAppBar(
-          leading: DismissButton(
-            key: Key(K.dismissButton),
-            exitType: exitType,
-            onDismiss: appBarOnDismiss,
-          ),
+          leading: Navigator.of(context).canPop()
+              ? DismissButton(
+                  key: Key(K.dismissButton),
+                  exitType: exitType,
+                  onDismiss: appBarOnDismiss,
+                )
+              : null,
+          titleSpacing: Navigator.of(context).canPop()
+              ? 0
+              : NavigationToolbar.kMiddleSpacing,
           scrollController: PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
           title: Text(appBarTitle),
