@@ -1,4 +1,4 @@
-enum ExitType { warning, disabled, x, arrow }
+enum ExitType { warning, disabled, x, arrow, hidden }
 enum ViewType { loading, normal, offline, error }
 enum OperationStatus { working, offline, error, complete }
 
