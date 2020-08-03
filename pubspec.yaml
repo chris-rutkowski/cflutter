@@ -10,7 +10,6 @@ environment:
 dependencies:
   cupertino_icons:
   data_connection_checker:
-  dio:
   equatable:
   flutter:
     sdk: flutter

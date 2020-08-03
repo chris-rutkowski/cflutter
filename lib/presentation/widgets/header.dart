@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../utils/theme/space.dart';
 
 class Header extends StatelessWidget {
+  static var headerToBodyMargin = small;
+
   final String text;
   final String body;
 
@@ -32,7 +34,7 @@ class Header extends StatelessWidget {
           Visibility(
             visible: body != null,
             child: Padding(
-              padding: EdgeInsets.only(top: small),
+              padding: EdgeInsets.only(top: headerToBodyMargin),
               child: Text(
                 body ?? '',
                 style: Theme.of(context).textTheme.bodyText1,
