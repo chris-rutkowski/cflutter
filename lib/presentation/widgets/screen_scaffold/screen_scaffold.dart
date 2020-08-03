@@ -94,6 +94,8 @@ class ScreenScaffold extends StatelessWidget {
 
           if (exitType == ExitType.warning) {
             return await UnsavedChangesAlert.ask(context);
+          } else if (exitType == ExitType.x) {
+            return true;
           } else {
             return false;
           }
