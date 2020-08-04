@@ -50,9 +50,9 @@ class ScreenScaffold extends StatelessWidget {
                       onDismiss: appBarOnDismiss,
                     )
                   : null,
-          titleSpacing: Navigator.of(context).canPop()
-              ? 0
-              : NavigationToolbar.kMiddleSpacing,
+          titleSpacing: exitType == ExitType.hidden
+              ? NavigationToolbar.kMiddleSpacing
+              : 0,
           scrollController: PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
           title: Text(appBarTitle),
