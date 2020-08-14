@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
 class PlatformInkWell extends StatelessWidget {
+  final BorderRadius borderRadius;
   final GestureTapCallback onTap;
   final Widget child;
 
-  PlatformInkWell({Key key, this.onTap, this.child}) : super(key: key);
+  PlatformInkWell({
+    Key key,
+    this.borderRadius,
+    this.onTap,
+    this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: borderRadius,
       splashColor: Theme.of(context).platform == TargetPlatform.iOS
           ? Colors.transparent
           : Theme.of(context).splashColor,
