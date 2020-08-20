@@ -1,17 +1,44 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 
 abstract class InternetWaiter {
-  Future<bool> get online;
-  Future wait();
+  bool get seemsOnline;
+  Future<bool> get isOnline;
+  Future<void> wait();
+  void dispose();
 }
 
 class InternetWaiterImpl implements InternetWaiter {
   @override
-  Future<bool> get online => DataConnectionChecker().hasConnection;
+  bool seemsOnline;
+
+  final Duration seemsOnlineRefreshDuration;
+
+  bool _disposed = false;
+
+  InternetWaiterImpl._([Duration seemsOnlineRefreshDuration])
+      : seemsOnlineRefreshDuration =
+            seemsOnlineRefreshDuration ?? Duration(seconds: 10);
+
+  factory InternetWaiterImpl([Duration seemsOnlineRefreshDuration]) =>
+      InternetWaiterImpl._(seemsOnlineRefreshDuration).._checkSeemsOnline();
+
+  void _checkSeemsOnline() async {
+    if (_disposed) return;
+    seemsOnline = await DataConnectionChecker().hasConnection;
+    await Future.delayed(seemsOnlineRefreshDuration);
+    if (_disposed) return;
+    _checkSeemsOnline();
+  }
 
   @override
-  Future wait() async {
-    if (await online) return true;
+  void dispose() => _disposed = true;
+
+  @override
+  Future<bool> get isOnline => DataConnectionChecker().hasConnection;
+
+  @override
+  Future<void> wait() async {
+    if (await isOnline) return true;
 
     await Future.delayed(Duration(milliseconds: 1000));
     return await wait();
