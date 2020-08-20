@@ -1,4 +1,5 @@
 import 'package:cflutter/app.dart';
+import 'package:cflutter/presentation/widgets/cell/cell.dart';
 import 'package:cflutter/presentation/widgets/screen_scaffold/screen_scaffold.dart';
 import 'package:cflutter/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,14 @@ class ExampleApp extends StatelessWidget {
       home: ScreenScaffold(
         appBarTitle: 'Example',
         exitType: ExitType.hidden,
-        children: (context) => [],
+        children: (context) => [
+          Cell(
+            header: 'Demo internet waiter',
+            accessory: ChevronAccessory(),
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => DemoInternetWaiter())),
+          )
+        ],
       ),
     );
   }
