@@ -43,13 +43,11 @@ class ScreenScaffold extends StatelessWidget {
         builder: (context) => ElevatedOnScrollAppBar(
           leading: exitType == ExitType.hidden
               ? null
-              : Navigator.of(context).canPop()
-                  ? DismissButton(
-                      key: Key(K.dismissButton),
-                      exitType: exitType,
-                      onDismiss: appBarOnDismiss,
-                    )
-                  : null,
+              : DismissButton(
+                  key: Key(K.dismissButton),
+                  exitType: exitType,
+                  onDismiss: appBarOnDismiss,
+                ),
           titleSpacing: exitType == ExitType.hidden
               ? NavigationToolbar.kMiddleSpacing
               : 0,
