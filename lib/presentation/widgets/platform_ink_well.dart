@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class PlatformInkWell extends StatelessWidget {
   final BorderRadius borderRadius;
   final GestureTapCallback onTap;
+  final GestureLongPressCallback onLongPress;
   final Widget child;
 
   PlatformInkWell({
     Key key,
     this.borderRadius,
     this.onTap,
+    this.onLongPress,
     this.child,
   }) : super(key: key);
 
@@ -23,6 +25,7 @@ class PlatformInkWell extends StatelessWidget {
           ? Theme.of(context).splashColor
           : Theme.of(context).highlightColor,
       onTap: onTap,
+      onLongPress: onLongPress,
       child: child,
     );
   }
