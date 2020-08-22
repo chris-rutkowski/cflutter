@@ -13,6 +13,7 @@ import '../unsaved_changes_alert/unsaved_changes_alert.dart';
 import 'screen_scaffold_keys.dart' as K;
 
 class ScreenScaffold extends StatelessWidget {
+  final ScrollController scrollController;
   final Function(Appearance) onAppearanceChanged;
   final List<Widget> Function(BuildContext) children;
   final Widget Function(BuildContext) body;
@@ -25,6 +26,7 @@ class ScreenScaffold extends StatelessWidget {
 
   ScreenScaffold({
     Key key,
+    this.scrollController,
     this.onAppearanceChanged,
     this.children,
     this.body,
@@ -51,7 +53,8 @@ class ScreenScaffold extends StatelessWidget {
           titleSpacing: exitType == ExitType.hidden
               ? NavigationToolbar.kMiddleSpacing
               : 0,
-          scrollController: PrimaryScrollController.of(context),
+          scrollController:
+              scrollController ?? PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
           title: Text(appBarTitle),
           actions: appBarActions,
@@ -73,7 +76,8 @@ class ScreenScaffold extends StatelessWidget {
             ? body(context)
             : ListView(
                 key: Key(K.list),
-                controller: PrimaryScrollController.of(context),
+                controller:
+                    scrollController ?? PrimaryScrollController.of(context),
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.only(bottom: medium),
                 children: children(context),
