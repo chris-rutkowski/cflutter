@@ -9,6 +9,8 @@ abstract class Accessory {}
 
 class ChevronAccessory implements Accessory {}
 
+class XAccessory implements Accessory {}
+
 class RadioAccessory implements Accessory {
   final bool checked;
   RadioAccessory({this.checked = false});
@@ -48,6 +50,11 @@ class Cell extends StatelessWidget {
     if (accessory is ChevronAccessory) {
       return Icon(
         Icons.chevron_right,
+        size: 28,
+      );
+    } else if (accessory is XAccessory) {
+      return Icon(
+        Icons.close,
         size: 28,
       );
     } else if (accessory is ImageAccessory) {
