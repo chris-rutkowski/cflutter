@@ -13,6 +13,7 @@ import '../unsaved_changes_alert/unsaved_changes_alert.dart';
 import 'screen_scaffold_keys.dart' as K;
 
 class ScreenScaffold extends StatelessWidget {
+  final Widget customAppBar;
   final ScrollController scrollController;
   final Function(Appearance) onAppearanceChanged;
   final List<Widget> Function(BuildContext) children;
@@ -26,6 +27,7 @@ class ScreenScaffold extends StatelessWidget {
 
   ScreenScaffold({
     Key key,
+    this.customAppBar,
     this.scrollController,
     this.onAppearanceChanged,
     this.children,
@@ -110,16 +112,23 @@ class ScreenScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(context),
+      appBar: customAppBar == null ? _appBar(context) : null,
       body: AppearanceNotifier(
         onAppearanceChanged: onAppearanceChanged != null
             ? (v) =>
                 onAppearanceChanged(v ? Appearance.visit : Appearance.leave)
             : null,
-        child: Stack(
-          children: <Widget>[
-            _body(context),
-            _onPopScope(context),
+        child: Column(
+          children: [
+            customAppBar ?? Container(),
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  _body(context),
+                  _onPopScope(context),
+                ],
+              ),
+            ),
           ],
         ),
       ),
