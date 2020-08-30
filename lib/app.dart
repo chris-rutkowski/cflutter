@@ -11,12 +11,14 @@ class App extends StatelessWidget {
   final Widget home;
   final ThemeData theme;
   final List<SingleChildWidget> providers;
+  final bool debugShowCheckedModeBanner;
 
   App({
     Key key,
     @required this.home,
     @required this.theme,
     this.providers,
+    this.debugShowCheckedModeBanner = true,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class App extends StatelessWidget {
         ...(providers ?? [])
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
         navigatorKey: NavigatorService.navigatorKey,
         navigatorObservers: [appearanceRouteObserver],
         builder: (context, navigator) {
