@@ -5,6 +5,7 @@ import '../custom_divider.dart';
 import 'text_field_cell_keys.dart';
 
 class TextFieldCell extends StatefulWidget {
+  final bool enabled;
   final String header;
   final String information;
   final String hint;
@@ -28,6 +29,7 @@ class TextFieldCell extends StatefulWidget {
 
   TextFieldCell({
     Key key,
+    this.enabled,
     this.header,
     this.information,
     this.hint,
@@ -127,6 +129,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
     children.add(SizedBox(height: xSmall));
 
     final textField = TextField(
+      enabled: widget.enabled,
       autofocus: widget.autofocus,
       key: Key(TextFieldCellKeys.textField),
       focusNode: focusNode,
