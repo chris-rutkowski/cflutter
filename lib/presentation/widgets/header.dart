@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/theme/space.dart';
+import 'keys.dart' as K;
 
 class Header extends StatelessWidget {
   static var headerToBodyMargin = small;
@@ -30,13 +31,18 @@ class Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(text, style: Theme.of(context).textTheme.headline2),
+          Text(
+            text,
+            key: Key(K.Header.title),
+            style: Theme.of(context).textTheme.headline2,
+          ),
           Visibility(
             visible: body != null,
             child: Padding(
               padding: EdgeInsets.only(top: headerToBodyMargin),
               child: Text(
                 body ?? '',
+                key: Key(K.Header.body),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
