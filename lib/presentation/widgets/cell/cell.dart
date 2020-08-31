@@ -69,10 +69,7 @@ class Cell extends StatelessWidget {
             child: Radio(
               groupValue: true,
               value: radioAccessory.checked,
-              onChanged: (_) {
-                if (onTap == null) return;
-                onTap();
-              },
+              onChanged: onTap != null ? (_) => onTap() : null,
             ),
           ),
           // hidden text widget for UI Tests
@@ -95,10 +92,7 @@ class Cell extends StatelessWidget {
             height: 18,
             child: Checkbox(
               value: checkboxAccessory.checked,
-              onChanged: (_) {
-                if (onTap == null) return;
-                onTap();
-              },
+              onChanged: onTap != null ? (_) => onTap() : null,
             ),
           ),
           // hidden text widget for UI Tests
