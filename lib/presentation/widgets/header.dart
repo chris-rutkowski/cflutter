@@ -22,32 +22,35 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: small,
-        right: small,
-        top: topPadding,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
-            text,
-            key: Key(K.Header.title),
-            style: Theme.of(context).textTheme.headline2,
-          ),
-          Visibility(
-            visible: body != null,
-            child: Padding(
-              padding: EdgeInsets.only(top: headerToBodyMargin),
-              child: Text(
-                body ?? '',
-                key: Key(K.Header.body),
-                style: Theme.of(context).textTheme.bodyText1,
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: small,
+          right: small,
+          top: topPadding,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              text,
+              key: Key(K.Header.title),
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            Visibility(
+              visible: body != null,
+              child: Padding(
+                padding: EdgeInsets.only(top: headerToBodyMargin),
+                child: Text(
+                  body ?? '',
+                  key: Key(K.Header.body),
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -114,48 +114,51 @@ class Cell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformInkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: small,
-          right: small,
-          top: medium,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: PlatformInkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: small,
+            right: small,
+            top: medium,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      header,
+                      key: Key(CellKeys.header),
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                  _buildAccessory(context),
+                ],
+              ),
+              ...bodyWidgets(context),
+              SizedBox(height: small),
+              CustomDivider(error: error != null),
+              Visibility(
+                visible: error != null,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: xSmall),
                   child: Text(
-                    header,
-                    key: Key(CellKeys.header),
-                    style: Theme.of(context).textTheme.headline3,
+                    error ?? '',
+                    key: Key(CellKeys.error),
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: Theme.of(context).colorScheme.error),
                   ),
                 ),
-                _buildAccessory(context),
-              ],
-            ),
-            ...bodyWidgets(context),
-            SizedBox(height: small),
-            CustomDivider(error: error != null),
-            Visibility(
-              visible: error != null,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: xSmall),
-                child: Text(
-                  error ?? '',
-                  key: Key(CellKeys.error),
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      .copyWith(color: Theme.of(context).colorScheme.error),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

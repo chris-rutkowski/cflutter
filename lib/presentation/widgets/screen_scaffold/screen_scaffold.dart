@@ -24,6 +24,7 @@ class ScreenScaffold extends StatelessWidget {
   final VoidCallback appBarOnDismiss;
   final double appBarElevationOffset;
   final List<Widget> appBarActions;
+  final Color backgroundColor;
 
   ScreenScaffold({
     Key key,
@@ -38,6 +39,7 @@ class ScreenScaffold extends StatelessWidget {
     this.appBarOnDismiss,
     this.appBarElevationOffset = medium,
     this.appBarActions,
+    this.backgroundColor,
   }) : super(key: key);
 
   PreferredSizeWidget _appBar(BuildContext context) {
@@ -112,6 +114,7 @@ class ScreenScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: customAppBar == null ? _appBar(context) : null,
       body: AppearanceNotifier(
         onAppearanceChanged: onAppearanceChanged != null

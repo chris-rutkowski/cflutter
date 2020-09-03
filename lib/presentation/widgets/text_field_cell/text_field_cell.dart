@@ -221,21 +221,24 @@ class _TextFieldCellState extends State<TextFieldCell> {
       ]);
     }
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        FocusScope.of(context).requestFocus(focusNode);
-      },
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: widget.header != null ? medium : small,
-          bottom: 0,
-          right: small,
-          left: small,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          FocusScope.of(context).requestFocus(focusNode);
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: widget.header != null ? medium : small,
+            bottom: 0,
+            right: small,
+            left: small,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children,
+          ),
         ),
       ),
     );

@@ -10,6 +10,8 @@ import 'presentation/widgets/processing_view.dart';
 class App extends StatelessWidget {
   final Widget home;
   final ThemeData theme;
+  final ThemeData darkTheme;
+  final ThemeMode themeMode;
   final List<SingleChildWidget> providers;
   final bool debugShowCheckedModeBanner;
 
@@ -17,6 +19,8 @@ class App extends StatelessWidget {
     Key key,
     @required this.home,
     @required this.theme,
+    this.darkTheme,
+    this.themeMode,
     this.providers,
     this.debugShowCheckedModeBanner = true,
   }) : super(key: key);
@@ -37,27 +41,27 @@ class App extends StatelessWidget {
         navigatorKey: NavigatorService.navigatorKey,
         navigatorObservers: [appearanceRouteObserver],
         builder: (context, navigator) {
-          return Theme(
-            data: theme,
-            child: Stack(
-              children: <Widget>[
-                navigator,
-                Consumer<Processing>(
-                  builder: (context, model, _) {
-                    return AnimatedOpacity(
-                      opacity: model.processing == null ? 0 : 1,
-                      duration: Duration(milliseconds: 300),
-                      child: ProcessingView(
-                        processingState: model.processing,
-                        data: model.processingViewData,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+          return Stack(
+            children: <Widget>[
+              navigator,
+              Consumer<Processing>(
+                builder: (context, model, _) {
+                  return AnimatedOpacity(
+                    opacity: model.processing == null ? 0 : 1,
+                    duration: Duration(milliseconds: 300),
+                    child: ProcessingView(
+                      processingState: model.processing,
+                      data: model.processingViewData,
+                    ),
+                  );
+                },
+              ),
+            ],
           );
         },
+        theme: theme,
+        darkTheme: darkTheme,
+        themeMode: themeMode,
         home: home,
       ),
     );
