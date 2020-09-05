@@ -7,7 +7,7 @@ class Header extends StatelessWidget {
   static var headerToBodyMargin = small;
 
   final String text;
-  final String body;
+  final body;
 
   /// Default Medium padding is to be used for very first header in the list
   /// subsequent headers should be spaced Large from the last item on the list.
@@ -42,16 +42,26 @@ class Header extends StatelessWidget {
               visible: body != null,
               child: Padding(
                 padding: EdgeInsets.only(top: headerToBodyMargin),
-                child: Text(
-                  body ?? '',
-                  key: Key(K.Header.body),
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+                child: _body(context),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _body(BuildContext context) {
+    if (body is String) {
+      return Text(
+        (body as String) ?? '',
+        key: Key(K.Header.body),
+        style: Theme.of(context).textTheme.bodyText1,
+      );
+    } else if (body is Widget) {
+      return (body as Widget);
+    } else {
+      throw Exception('body can be either String or Widget');
+    }
   }
 }
