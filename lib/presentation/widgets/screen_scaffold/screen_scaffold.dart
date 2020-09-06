@@ -91,7 +91,7 @@ class ScreenScaffold extends StatelessWidget {
   }
 
   Widget _onPopScope(BuildContext context) {
-    if ([ExitType.arrow].contains(exitType)) {
+    if ([ExitType.arrow, ExitType.hidden].contains(exitType)) {
       return Container();
     } else {
       return WillPopScope(
