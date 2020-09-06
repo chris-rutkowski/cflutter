@@ -4,6 +4,6 @@ class Unknown implements Exception {}
 
 class NotFound implements Exception {}
 
-class LoginCredentials implements Exception {}
+class Unauthorised implements Exception {}
 
 class SessionExpired implements Exception {}
