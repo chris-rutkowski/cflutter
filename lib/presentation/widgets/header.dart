@@ -58,6 +58,17 @@ class Header extends StatelessWidget {
         key: Key(K.Header.body),
         style: Theme.of(context).textTheme.bodyText1,
       );
+    } else if (body is RichText) {
+      return Stack(
+        children: [
+          body as Widget,
+          Text(
+            (body as RichText).text.toPlainText(),
+            key: Key(K.Header.body),
+            style: TextStyle(fontSize: 1, color: Colors.transparent),
+          ),
+        ],
+      );
     } else if (body is Widget) {
       return (body as Widget);
     } else if (body == null) {
