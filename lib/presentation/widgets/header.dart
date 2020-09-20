@@ -7,6 +7,7 @@ class Header extends StatelessWidget {
   static var headerToBodyMargin = small;
 
   final String text;
+  final Widget leading;
   final body;
 
   /// Default Medium padding is to be used for very first header in the list
@@ -16,9 +17,18 @@ class Header extends StatelessWidget {
   Header({
     Key key,
     this.text,
+    this.leading,
     this.body,
     this.topPadding = medium,
   }) : super(key: key);
+
+  Widget _leadingWithPadding(BuildContext context) {
+    if (leading == null) return Container();
+    return Padding(
+      padding: EdgeInsets.only(right: small),
+      child: leading,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +42,19 @@ class Header extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              text,
-              key: Key(K.Header.title),
-              style: Theme.of(context).textTheme.headline2,
+            Row(
+              children: [
+                _leadingWithPadding(context),
+                Expanded(
+                  child: Text(
+                    text,
+                    key: Key(K.Header.title),
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                ),
+              ],
             ),
             Visibility(
               visible: body != null,
