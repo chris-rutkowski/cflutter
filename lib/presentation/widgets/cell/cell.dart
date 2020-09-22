@@ -35,6 +35,7 @@ class Cell extends StatelessWidget {
   final Accessory accessory;
   final String error;
   final GestureTapCallback onTap;
+  final GestureLongPressCallback onLongPress;
 
   Cell({
     Key key,
@@ -44,6 +45,7 @@ class Cell extends StatelessWidget {
     this.accessory,
     this.error,
     this.onTap,
+    this.onLongPress,
   }) : super(key: key);
 
   Widget _buildAccessory(BuildContext context) {
@@ -118,6 +120,7 @@ class Cell extends StatelessWidget {
       color: Theme.of(context).colorScheme.surface,
       child: PlatformInkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Padding(
           padding: EdgeInsets.only(
             left: small,
