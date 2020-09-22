@@ -1,6 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-
-import 'package:data_connection_checker/data_connection_checker.dart';
 
 abstract class InternetWaiter {
   bool get seemsOnline;
@@ -22,13 +21,11 @@ class InternetWaiterImpl implements InternetWaiter {
             seemsOnlineRefreshDuration ?? Duration(seconds: 10);
 
   factory InternetWaiterImpl([Duration seemsOnlineRefreshDuration]) =>
-      InternetWaiterImpl._(seemsOnlineRefreshDuration)
-        .._addIPV6()
-        .._checkSeemsOnline();
+      InternetWaiterImpl._(seemsOnlineRefreshDuration).._checkSeemsOnline();
 
   void _checkSeemsOnline() async {
     if (_disposed) return;
-    seemsOnline = await DataConnectionChecker().hasConnection;
+    seemsOnline = await _checkInternetAccess();
     await Future.delayed(seemsOnlineRefreshDuration);
     if (_disposed) return;
     _checkSeemsOnline();
@@ -38,7 +35,7 @@ class InternetWaiterImpl implements InternetWaiter {
   void dispose() => _disposed = true;
 
   @override
-  Future<bool> get isOnline => DataConnectionChecker().hasConnection;
+  Future<bool> get isOnline => _checkInternetAccess();
 
   @override
   Future<void> wait() async {
@@ -48,51 +45,58 @@ class InternetWaiterImpl implements InternetWaiter {
     return await wait();
   }
 
-  void _addIPV6() {
-    final addresses = <AddressCheckOptions>[];
+  Future<bool> _checkInternetAccess() {
+    /// We use a mix of IPV4 and IPV6 here in case some networks only accept one of the types.
+    /// Only tested with an IPV4 only network so far (I don't have access to an IPV6 network).
+    final dnss = <InternetAddress>[
+      InternetAddress('8.8.8.8', type: InternetAddressType.IPv4), // Google
+      InternetAddress('2001:4860:4860::8888',
+          type: InternetAddressType.IPv6), // Google
+      InternetAddress('1.1.1.1', type: InternetAddressType.IPv4), // CloudFlare
+      InternetAddress('2606:4700:4700::1111',
+          type: InternetAddressType.IPv6), // CloudFlare
+      InternetAddress('208.67.222.222',
+          type: InternetAddressType.IPv4), // OpenDNS
+      InternetAddress('2620:0:ccc::2',
+          type: InternetAddressType.IPv6), // OpenDNS
+      InternetAddress('180.76.76.76', type: InternetAddressType.IPv4), // Baidu
+      InternetAddress('2400:da00::6666',
+          type: InternetAddressType.IPv6), // Baidu
+    ];
 
-    List<AddressCheckOptions>.from(
-      DataConnectionChecker.DEFAULT_ADDRESSES,
-    );
+    final completer = Completer<bool>();
 
-    addresses.addAll([
-      AddressCheckOptions(
-        // Google
-        InternetAddress('2001:4860:4860::8888', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-      AddressCheckOptions(
-        // Google
-        InternetAddress('2001:4860:4860::8844', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-      AddressCheckOptions(
-        // CloudFlare
-        InternetAddress('2606:4700:4700::64', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-      AddressCheckOptions(
-        // CloudFlare
-        InternetAddress('2606:4700:4700::6400', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-      AddressCheckOptions(
-        // OpenDNS
-        InternetAddress('2620:119:35::35', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-      AddressCheckOptions(
-        // OpenDNS
-        InternetAddress('2620:119:53::53', type: InternetAddressType.IPv6),
-        port: DataConnectionChecker.DEFAULT_PORT,
-        timeout: DataConnectionChecker.DEFAULT_TIMEOUT,
-      ),
-    ]);
-    DataConnectionChecker().addresses = addresses;
+    var callsReturned = 0;
+    void onCallReturned(bool isAlive) {
+      if (completer.isCompleted) return;
+
+      if (isAlive) {
+        completer.complete(true);
+      } else {
+        callsReturned++;
+        if (callsReturned >= dnss.length) {
+          completer.complete(false);
+        }
+      }
+    }
+
+    dnss.forEach((dns) => _pingDns(dns).then(onCallReturned));
+
+    return completer.future;
+  }
+
+  Future<bool> _pingDns(InternetAddress dnsAddress) async {
+    const dnsPort = 53;
+    const timeout = Duration(seconds: 3);
+
+    Socket socket;
+    try {
+      socket = await Socket.connect(dnsAddress, dnsPort, timeout: timeout);
+      socket?.destroy();
+      return true;
+    } on SocketException {
+      socket?.destroy();
+    }
+    return false;
   }
 }
