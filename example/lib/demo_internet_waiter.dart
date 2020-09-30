@@ -11,7 +11,10 @@ class DemoInternetWaiter extends StatefulWidget {
 class _DemoInternetWaiterState extends State<DemoInternetWaiter> {
   String checkNowResult = 'n/a';
 
-  final waiter = InternetWaiterImpl(Duration(seconds: 10));
+  final waiter = InternetWaiterImpl(
+    seemsOnlineRefreshDuration: Duration(seconds: 10),
+    fallbackUrl: 'https://google.com',
+  );
 
   @override
   void initState() {

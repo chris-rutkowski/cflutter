@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_spinkit:
+  http:
   provider:
 
 dev_dependencies:
