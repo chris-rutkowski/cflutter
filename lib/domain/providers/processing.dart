@@ -8,9 +8,12 @@ class Processing with ChangeNotifier {
 
   String _processingTitle;
   String _completedTitle;
+  IconData _completedIcon;
 
   ProcessingViewData get processingViewData => ProcessingViewData(
-      processingTitle: _processingTitle, completedTitle: _completedTitle);
+      processingTitle: _processingTitle,
+      completedTitle: _completedTitle,
+      completedIcon: _completedIcon);
 
   void start(String title) {
     _processingTitle = title;
@@ -18,8 +21,12 @@ class Processing with ChangeNotifier {
     notifyListeners();
   }
 
-  void complete(String title) async {
+  void complete(
+    String title, {
+    IconData completedIcon = Icons.cloud_done,
+  }) async {
     _completedTitle = title;
+    _completedIcon = completedIcon;
     _processing = ProcessingState.completed;
     notifyListeners();
 

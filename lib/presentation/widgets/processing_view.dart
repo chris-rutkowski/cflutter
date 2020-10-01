@@ -10,8 +10,13 @@ enum ProcessingState { processing, completed }
 class ProcessingViewData {
   final String processingTitle;
   final String completedTitle;
+  final IconData completedIcon;
 
-  ProcessingViewData({this.processingTitle, this.completedTitle});
+  ProcessingViewData({
+    this.processingTitle,
+    this.completedTitle,
+    this.completedIcon = Icons.cloud_done,
+  });
 }
 
 class ProcessingView extends StatefulWidget {
@@ -114,7 +119,7 @@ class _ProcessingViewState extends State<ProcessingView>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Icon(
-          Icons.cloud_done,
+          widget.data.completedIcon,
           color: Theme.of(context).colorScheme.primary,
           size: 96,
         ),
