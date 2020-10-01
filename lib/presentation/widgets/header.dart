@@ -92,7 +92,7 @@ class Header extends StatelessWidget {
     } else if (body == null) {
       return null;
     } else {
-      throw Exception('body can be either String or Widget');
+      throw Exception('body can be either String, RichText or Widget');
     }
   }
 }

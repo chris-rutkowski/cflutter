@@ -30,7 +30,7 @@ class Cell extends StatelessWidget {
   static var headerToBodyMargin = small;
 
   final String header;
-  final String body;
+  final body;
   final int bodyMaxLines;
   final Accessory accessory;
   final String error;
@@ -172,17 +172,24 @@ class Cell extends StatelessWidget {
       return [];
     }
 
-    return [
-      SizedBox(height: headerToBodyMargin),
-      Text(
-        body,
+    final widgets = <Widget>[SizedBox(height: headerToBodyMargin)];
+
+    if (body is String) {
+      widgets.add(Text(
+        body as String,
         maxLines: bodyMaxLines,
         overflow: bodyMaxLines != null
             ? TextOverflow.ellipsis
             : DefaultTextStyle.of(context).overflow,
         key: Key(CellKeys.body),
         style: Theme.of(context).textTheme.bodyText1,
-      ),
-    ];
+      ));
+    } else if (body is Widget) {
+      widgets.add(body as Widget);
+    } else {
+      throw Exception('body can be either String or Widget');
+    }
+
+    return widgets;
   }
 }
