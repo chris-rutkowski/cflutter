@@ -6,7 +6,7 @@ import 'keys.dart' as K;
 class Header extends StatelessWidget {
   static var headerToBodyMargin = small;
 
-  final String text;
+  final text;
   final Widget leading;
   final body;
 
@@ -48,11 +48,7 @@ class Header extends StatelessWidget {
               children: [
                 _leadingWithPadding(context),
                 Expanded(
-                  child: Text(
-                    text,
-                    key: Key(K.Header.title),
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
+                  child: _header(context),
                 ),
               ],
             ),
@@ -67,6 +63,20 @@ class Header extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _header(BuildContext context) {
+    if (text is String) {
+      return Text(
+        text as String,
+        key: Key(K.Header.title),
+        style: Theme.of(context).textTheme.headline2,
+      );
+    } else if (text is Widget) {
+      return text as Widget;
+    } else {
+      throw Exception('text can be either String or Widget');
+    }
   }
 
   Widget _body(BuildContext context) {

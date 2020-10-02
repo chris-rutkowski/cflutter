@@ -29,7 +29,7 @@ class ImageAccessory implements Accessory {
 class Cell extends StatelessWidget {
   static var headerToBodyMargin = small;
 
-  final String header;
+  final header;
   final body;
   final int bodyMaxLines;
   final Accessory accessory;
@@ -134,11 +134,7 @@ class Cell extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
-                    child: Text(
-                      header,
-                      key: Key(CellKeys.header),
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
+                    child: _headerWidget(context),
                   ),
                   _buildAccessory(context),
                 ],
@@ -165,6 +161,20 @@ class Cell extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _headerWidget(BuildContext context) {
+    if (header is String) {
+      return Text(
+        header as String,
+        key: Key(CellKeys.header),
+        style: Theme.of(context).textTheme.headline3,
+      );
+    } else if (header is Widget) {
+      return header as Widget;
+    } else {
+      throw Exception('header can be either String or Widget');
+    }
   }
 
   List<Widget> bodyWidgets(BuildContext context) {
