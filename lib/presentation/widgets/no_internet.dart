@@ -12,7 +12,7 @@ class NoInternet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: small),
