@@ -5,6 +5,7 @@ import 'package:cflutter/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 import 'demo_internet_waiter.dart';
+import 'demo_on_screen_logger.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -21,10 +22,14 @@ class ExampleApp extends StatelessWidget {
         exitType: ExitType.hidden,
         children: (context) => [
           Cell(
-            header: 'Demo internet waiter',
+            header: 'Demo InternetWaiter',
             accessory: ChevronAccessory(),
-            onTap: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => DemoInternetWaiter())),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => DemoInternetWaiter())),
+          ),
+          Cell(
+            header: 'Demo OnScreenLogger',
+            accessory: ChevronAccessory(),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => DemoOnScreenLogger())),
           )
         ],
       ),
