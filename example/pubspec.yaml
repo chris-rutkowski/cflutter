@@ -9,7 +9,7 @@ environment:
 dependencies:
   cflutter:
     path: ../
-  cupertino_icons:
+  cupertino_icons: 1.0.0
   flutter:
     sdk: flutter
 
