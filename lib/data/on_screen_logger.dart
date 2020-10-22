@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class OnScreenLogger with ChangeNotifier {
-  static final OnScreenLogger _singleton = OnScreenLogger._();
+  static OnScreenLogger singleton;
 
   var logs = <String>[];
   bool get visible => _hideDate != null;
@@ -9,7 +9,21 @@ class OnScreenLogger with ChangeNotifier {
 
   OnScreenLogger._();
 
-  factory OnScreenLogger() => _singleton;
+  factory OnScreenLogger() {
+    if (singleton != null) {
+      return singleton;
+    }
+
+    final logger = OnScreenLogger._();
+    singleton = logger;
+    return logger;
+  }
+
+  @override
+  void dispose() {
+    singleton = null;
+    super.dispose();
+  }
 
   void addLog(String log) async {
     logs.add(log);
