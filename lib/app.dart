@@ -16,6 +16,7 @@ class App extends StatelessWidget {
   final ThemeMode themeMode;
   final List<SingleChildWidget> providers;
   final bool debugShowCheckedModeBanner;
+  final Map<String, WidgetBuilder> routes;
 
   App({
     Key key,
@@ -25,6 +26,7 @@ class App extends StatelessWidget {
     this.themeMode,
     this.providers,
     this.debugShowCheckedModeBanner = true,
+    this.routes = const <String, WidgetBuilder>{},
   }) : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class App extends StatelessWidget {
         ...(providers ?? [])
       ],
       child: MaterialApp(
+        routes: routes,
         debugShowCheckedModeBanner: debugShowCheckedModeBanner,
         navigatorKey: NavigatorService.navigatorKey,
         navigatorObservers: [appearanceRouteObserver],
