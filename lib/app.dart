@@ -10,6 +10,8 @@ import 'presentation/widgets/on_screen_logger_view.dart';
 import 'presentation/widgets/processing_view.dart';
 
 class App extends StatelessWidget {
+  final TransitionBuilder builder;
+  final Locale locale;
   final Widget home;
   final ThemeData theme;
   final ThemeData darkTheme;
@@ -20,6 +22,8 @@ class App extends StatelessWidget {
 
   App({
     Key key,
+    this.builder,
+    this.locale,
     @required this.home,
     @required this.theme,
     this.darkTheme,
@@ -42,35 +46,43 @@ class App extends StatelessWidget {
         ...(providers ?? [])
       ],
       child: MaterialApp(
+        locale: locale,
         routes: routes,
         debugShowCheckedModeBanner: debugShowCheckedModeBanner,
         navigatorKey: NavigatorService.navigatorKey,
         navigatorObservers: [appearanceRouteObserver],
         builder: (context, navigator) {
-          return Stack(
-            children: <Widget>[
-              navigator,
-              Consumer<Processing>(
-                builder: (context, model, _) {
-                  return AnimatedOpacity(
-                    opacity: model.processing == null ? 0 : 1,
-                    duration: Duration(milliseconds: 300),
-                    child: ProcessingView(
-                      processingState: model.processing,
-                      data: model.processingViewData,
-                    ),
-                  );
-                },
-              ),
-              OnScreenLoggerView(),
-            ],
-          );
+          if (builder != null) {
+            return builder(context, _content(context, navigator));
+          }
+          return _content(context, navigator);
         },
         theme: theme,
         darkTheme: darkTheme,
         themeMode: themeMode,
         home: home,
       ),
+    );
+  }
+
+  Widget _content(BuildContext context, Widget navigator) {
+    return Stack(
+      children: <Widget>[
+        navigator,
+        Consumer<Processing>(
+          builder: (context, model, _) {
+            return AnimatedOpacity(
+              opacity: model.processing == null ? 0 : 1,
+              duration: Duration(milliseconds: 300),
+              child: ProcessingView(
+                processingState: model.processing,
+                data: model.processingViewData,
+              ),
+            );
+          },
+        ),
+        OnScreenLoggerView(),
+      ],
     );
   }
 }
