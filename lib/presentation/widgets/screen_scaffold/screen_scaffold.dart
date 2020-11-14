@@ -24,6 +24,7 @@ class ScreenScaffold extends StatelessWidget {
   final VoidCallback appBarOnDismiss;
   final double appBarElevationOffset;
   final List<Widget> appBarActions;
+  final PreferredSizeWidget appBarBottom;
   final Color backgroundColor;
 
   ScreenScaffold({
@@ -39,6 +40,7 @@ class ScreenScaffold extends StatelessWidget {
     this.appBarOnDismiss,
     this.appBarElevationOffset = medium,
     this.appBarActions,
+    this.appBarBottom,
     this.backgroundColor,
   }) : super(key: key);
 
@@ -54,14 +56,12 @@ class ScreenScaffold extends StatelessWidget {
                   exitType: exitType,
                   onDismiss: appBarOnDismiss,
                 ),
-          titleSpacing: exitType == ExitType.hidden
-              ? NavigationToolbar.kMiddleSpacing
-              : 0,
-          scrollController:
-              scrollController ?? PrimaryScrollController.of(context),
+          titleSpacing: exitType == ExitType.hidden ? NavigationToolbar.kMiddleSpacing : 0,
+          scrollController: scrollController ?? PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
           title: Text(appBarTitle),
           actions: appBarActions,
+          bottom: appBarBottom,
         ),
       ),
     );
@@ -80,8 +80,7 @@ class ScreenScaffold extends StatelessWidget {
             ? body(context)
             : ListView(
                 key: Key(K.list),
-                controller:
-                    scrollController ?? PrimaryScrollController.of(context),
+                controller: scrollController ?? PrimaryScrollController.of(context),
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.only(bottom: medium),
                 children: children(context),
@@ -117,10 +116,8 @@ class ScreenScaffold extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: customAppBar == null ? _appBar(context) : null,
       body: AppearanceNotifier(
-        onAppearanceChanged: onAppearanceChanged != null
-            ? (v) =>
-                onAppearanceChanged(v ? Appearance.visit : Appearance.leave)
-            : null,
+        onAppearanceChanged:
+            onAppearanceChanged != null ? (v) => onAppearanceChanged(v ? Appearance.visit : Appearance.leave) : null,
         child: Column(
           children: [
             customAppBar ?? Container(),
