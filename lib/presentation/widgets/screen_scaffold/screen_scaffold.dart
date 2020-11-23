@@ -23,6 +23,7 @@ class ScreenScaffold extends StatelessWidget {
   final String appBarTitle;
   final VoidCallback appBarOnDismiss;
   final double appBarElevationOffset;
+  final bool appBarCenterTitle;
   final List<Widget> appBarActions;
   final PreferredSizeWidget appBarBottom;
   final Color backgroundColor;
@@ -39,6 +40,7 @@ class ScreenScaffold extends StatelessWidget {
     this.appBarTitle,
     this.appBarOnDismiss,
     this.appBarElevationOffset = medium,
+    this.appBarCenterTitle,
     this.appBarActions,
     this.appBarBottom,
     this.backgroundColor,
@@ -49,6 +51,7 @@ class ScreenScaffold extends StatelessWidget {
       preferredSize: Size.fromHeight(kToolbarHeight),
       child: Builder(
         builder: (context) => ElevatedOnScrollAppBar(
+          centerTitle: appBarCenterTitle,
           leading: exitType == ExitType.hidden
               ? null
               : DismissButton(
