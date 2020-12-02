@@ -5,6 +5,8 @@ class PlatformInkWell extends StatelessWidget {
   final GestureTapCallback onTap;
   final GestureLongPressCallback onLongPress;
   final Widget child;
+  final Color highlightColor;
+  final Color splashColor;
 
   PlatformInkWell({
     Key key,
@@ -12,6 +14,8 @@ class PlatformInkWell extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.child,
+    this.highlightColor,
+    this.splashColor,
   }) : super(key: key);
 
   @override
@@ -20,10 +24,10 @@ class PlatformInkWell extends StatelessWidget {
       borderRadius: borderRadius,
       splashColor: Theme.of(context).platform == TargetPlatform.iOS
           ? Colors.transparent
-          : Theme.of(context).splashColor,
+          : splashColor ?? Theme.of(context).splashColor,
       highlightColor: Theme.of(context).platform == TargetPlatform.iOS
-          ? Theme.of(context).splashColor
-          : Theme.of(context).highlightColor,
+          ? splashColor ?? Theme.of(context).splashColor
+          : highlightColor ?? Theme.of(context).highlightColor,
       onTap: onTap,
       onLongPress: onLongPress,
       child: child,
