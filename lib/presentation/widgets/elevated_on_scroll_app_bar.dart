@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ElevatedOnScrollAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ScrollController scrollController;
   final bool centerTitle;
+  final bool automaticallyImplyLeading;
   final double minOffsetForElevation;
   final Widget leading;
   final Widget title;
@@ -17,6 +18,7 @@ class ElevatedOnScrollAppBar extends StatefulWidget implements PreferredSizeWidg
     Key key,
     this.scrollController,
     this.centerTitle,
+    this.automaticallyImplyLeading = true,
     this.minOffsetForElevation = 1,
     this.leading,
     this.title,
@@ -55,6 +57,7 @@ class _ElevatedOnScrollAppBarState extends State<ElevatedOnScrollAppBar> {
     return AppBar(
       elevation: _isElevated ? Theme.of(context).appBarTheme.elevation : 0,
       centerTitle: widget.centerTitle,
+      automaticallyImplyLeading: widget.automaticallyImplyLeading,
       leading: widget.leading,
       title: widget.title,
       titleSpacing: widget.titleSpacing,
