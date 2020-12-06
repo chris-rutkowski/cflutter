@@ -6,14 +6,11 @@ class PlatformFlatButton extends StatelessWidget {
   final VoidCallback onPressed;
   final TextStyle textStyle;
 
-  PlatformFlatButton(
-      {Key key, this.text, this.textColor, this.onPressed, this.textStyle})
-      : super(key: key);
+  PlatformFlatButton({Key key, this.text, this.textColor, this.onPressed, this.textStyle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final templateTextStyle =
-        this.textStyle ?? Theme.of(context).textTheme.headline3;
+    final templateTextStyle = this.textStyle ?? Theme.of(context).textTheme.headline3;
     final textStyle = TextStyle(
       fontWeight: templateTextStyle.fontWeight,
       fontSize: templateTextStyle.fontSize,
@@ -34,6 +31,7 @@ class PlatformFlatButton extends StatelessWidget {
         child: Text(
           text,
           style: textStyle,
+          textAlign: TextAlign.center,
         ),
         disabledTextColor: Theme.of(context).disabledColor,
       );
@@ -78,6 +76,7 @@ class __IOSPlatformFlatButtonState extends State<_IOSPlatformFlatButton> {
           child: Text(
             widget.text,
             style: widget.textStyle.copyWith(color: _textColor),
+            textAlign: TextAlign.center,
           ),
         ),
         duration: Duration(milliseconds: 200),
