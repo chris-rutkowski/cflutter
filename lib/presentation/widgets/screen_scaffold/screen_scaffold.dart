@@ -53,7 +53,7 @@ class ScreenScaffold extends StatelessWidget {
         builder: (context) => ElevatedOnScrollAppBar(
           centerTitle: appBarCenterTitle,
           automaticallyImplyLeading: exitType != ExitType.hidden,
-          leading: exitType == ExitType.hidden
+          leading: [ExitType.hidden, ExitType.disabled].contains(exitType)
               ? null
               : DismissButton(
                   key: Key(K.dismissButton),
