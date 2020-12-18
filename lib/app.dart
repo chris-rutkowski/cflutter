@@ -19,6 +19,8 @@ class App extends StatelessWidget {
   final List<SingleChildWidget> providers;
   final bool debugShowCheckedModeBanner;
   final Map<String, WidgetBuilder> routes;
+  final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
+  final Iterable<Locale> supportedLocales;
 
   App({
     Key key,
@@ -31,6 +33,8 @@ class App extends StatelessWidget {
     this.providers,
     this.debugShowCheckedModeBanner = true,
     this.routes = const <String, WidgetBuilder>{},
+    this.localizationsDelegates,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
   }) : super(key: key);
 
   @override
@@ -46,6 +50,8 @@ class App extends StatelessWidget {
         ...(providers ?? [])
       ],
       child: MaterialApp(
+        localizationsDelegates: localizationsDelegates,
+        supportedLocales: supportedLocales,
         locale: locale,
         routes: routes,
         debugShowCheckedModeBanner: debugShowCheckedModeBanner,
