@@ -36,6 +36,7 @@ class Cell extends StatelessWidget {
   final String error;
   final GestureTapCallback onTap;
   final GestureLongPressCallback onLongPress;
+  final bool showSeparator;
 
   Cell({
     Key key,
@@ -46,6 +47,7 @@ class Cell extends StatelessWidget {
     this.error,
     this.onTap,
     this.onLongPress,
+    this.showSeparator = true,
   }) : super(key: key);
 
   Widget _buildAccessory(BuildContext context) {
@@ -141,7 +143,10 @@ class Cell extends StatelessWidget {
               ),
               ...bodyWidgets(context),
               SizedBox(height: small),
-              CustomDivider(error: error != null),
+              Visibility(
+                visible: showSeparator,
+                child: CustomDivider(error: error != null),
+              ),
               Visibility(
                 visible: error != null,
                 child: Padding(
@@ -149,10 +154,7 @@ class Cell extends StatelessWidget {
                   child: Text(
                     error ?? '',
                     key: Key(CellKeys.error),
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(color: Theme.of(context).colorScheme.error),
+                    style: Theme.of(context).textTheme.caption.copyWith(color: Theme.of(context).colorScheme.error),
                   ),
                 ),
               ),
@@ -188,9 +190,7 @@ class Cell extends StatelessWidget {
       widgets.add(Text(
         body as String,
         maxLines: bodyMaxLines,
-        overflow: bodyMaxLines != null
-            ? TextOverflow.ellipsis
-            : DefaultTextStyle.of(context).overflow,
+        overflow: bodyMaxLines != null ? TextOverflow.ellipsis : DefaultTextStyle.of(context).overflow,
         key: Key(CellKeys.body),
         style: Theme.of(context).textTheme.bodyText1,
       ));
