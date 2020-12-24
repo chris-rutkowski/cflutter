@@ -7,3 +7,5 @@ class NotFound implements Exception {}
 class Unauthorised implements Exception {}
 
 class SessionExpired implements Exception {}
+
+class Conflict implements Exception {}
