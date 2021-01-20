@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'data/on_screen_logger.dart';
 import 'domain/navigator_service.dart';
 import 'domain/providers/processing.dart';
 import 'presentation/widgets/appearance_notifier.dart';
-import 'presentation/widgets/on_screen_logger_view.dart';
 import 'presentation/widgets/processing_view.dart';
 
 class App extends StatelessWidget {
@@ -45,7 +43,6 @@ class App extends StatelessWidget {
           create: (_) => Processing(),
           lazy: false,
         ),
-        ChangeNotifierProvider<OnScreenLogger>(create: (_) => OnScreenLogger()),
         Provider(create: (_) => NavigatorService()),
         ...(providers ?? [])
       ],
@@ -87,7 +84,6 @@ class App extends StatelessWidget {
             );
           },
         ),
-        OnScreenLoggerView(),
       ],
     );
   }
