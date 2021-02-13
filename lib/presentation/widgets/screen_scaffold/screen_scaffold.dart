@@ -21,6 +21,7 @@ class ScreenScaffold extends StatelessWidget {
   final ExitType exitType;
   final ViewType viewType;
   final String appBarTitle;
+  final Widget appBarTitleWidget;
   final VoidCallback appBarOnDismiss;
   final double appBarElevationOffset;
   final bool appBarCenterTitle;
@@ -38,6 +39,7 @@ class ScreenScaffold extends StatelessWidget {
     this.exitType = ExitType.arrow,
     this.viewType,
     this.appBarTitle,
+    this.appBarTitleWidget,
     this.appBarOnDismiss,
     this.appBarElevationOffset = medium,
     this.appBarCenterTitle,
@@ -63,7 +65,7 @@ class ScreenScaffold extends StatelessWidget {
           titleSpacing: exitType == ExitType.hidden ? NavigationToolbar.kMiddleSpacing : 0,
           scrollController: scrollController ?? PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
-          title: Text(appBarTitle),
+          title: appBarTitleWidget ?? Text(appBarTitle),
           actions: appBarActions,
           bottom: appBarBottom,
         ),
