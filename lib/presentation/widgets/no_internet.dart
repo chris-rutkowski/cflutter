@@ -8,9 +8,19 @@ class NoInternet extends StatelessWidget {
   static var title = 'No Internet';
   static var subtitle =
       'Your device is not connected to the Internet. Please check your WiFi or mobile data connection.';
+  static Widget Function(BuildContext context) extra;
 
   @override
   Widget build(BuildContext context) {
+    final extraWidgets = <Widget>[];
+
+    if (extra != null) {
+      extraWidgets.addAll([
+        SizedBox(height: small),
+        extra(context),
+      ]);
+    }
+
     return Container(
       color: Theme.of(context).colorScheme.surface,
       child: Center(
@@ -35,7 +45,8 @@ class NoInternet extends StatelessWidget {
                 subtitle,
                 style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
-              )
+              ),
+              ...extraWidgets
             ],
           ),
         ),
