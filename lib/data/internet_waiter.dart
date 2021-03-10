@@ -14,7 +14,7 @@ abstract class InternetWaiter {
 }
 
 class InternetWaiterImpl implements InternetWaiter {
-  final String _fallbackUrl;
+  final Uri _fallbackUrl;
   final Duration _seemsOnlineRefreshDuration;
   bool _disposed = false;
 
@@ -28,7 +28,7 @@ class InternetWaiterImpl implements InternetWaiter {
 
   factory InternetWaiterImpl({
     Duration seemsOnlineRefreshDuration = const Duration(seconds: 10),
-    String fallbackUrl,
+    Uri fallbackUrl,
   }) =>
       InternetWaiterImpl._(seemsOnlineRefreshDuration, fallbackUrl).._checkSeemsOnline();
 

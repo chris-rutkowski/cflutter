@@ -13,7 +13,7 @@ class _DemoInternetWaiterState extends State<DemoInternetWaiter> {
 
   final waiter = InternetWaiterImpl(
     seemsOnlineRefreshDuration: Duration(seconds: 10),
-    fallbackUrl: 'https://google.com',
+    fallbackUrl: Uri.parse('https://google.com'),
   );
 
   @override
