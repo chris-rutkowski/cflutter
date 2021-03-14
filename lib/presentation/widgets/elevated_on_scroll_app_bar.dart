@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class ElevatedOnScrollAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final ScrollController scrollController;
-  final bool centerTitle;
+  final ScrollController? scrollController;
+  final bool? centerTitle;
   final bool automaticallyImplyLeading;
   final double minOffsetForElevation;
-  final Widget leading;
-  final Widget title;
+  final Widget? leading;
+  final Widget? title;
   final double titleSpacing;
-  final List<Widget> actions;
-  final PreferredSizeWidget bottom;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight + (bottom?.preferredSize?.height ?? 0));
 
   ElevatedOnScrollAppBar({
-    Key key,
+    Key? key,
     this.scrollController,
     this.centerTitle,
     this.automaticallyImplyLeading = true,
@@ -41,11 +41,11 @@ class _ElevatedOnScrollAppBarState extends State<ElevatedOnScrollAppBar> {
   }
 
   void updateIsElevated() {
-    if (widget.scrollController == null || !widget.scrollController.hasClients) {
+    if (widget.scrollController == null || !widget.scrollController!.hasClients) {
       return;
     }
 
-    final offset = widget.scrollController.offset;
+    final offset = widget.scrollController!.offset;
     if (offset >= widget.minOffsetForElevation && !_isElevated) {
       setState(() => _isElevated = true);
     } else if (offset < widget.minOffsetForElevation && _isElevated) {

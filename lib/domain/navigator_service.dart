@@ -4,7 +4,7 @@ class NavigatorService {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   Future<dynamic> push(Widget widget) {
-    return navigatorKey.currentState.push(
+    return navigatorKey.currentState!.push(
       MaterialPageRoute(
         builder: (context) {
           return widget;
@@ -14,7 +14,7 @@ class NavigatorService {
   }
 
   Future<dynamic> pushReplacement(Widget widget) {
-    return navigatorKey.currentState.pushReplacement(
+    return navigatorKey.currentState!.pushReplacement(
       MaterialPageRoute(
         builder: (context) {
           return widget;
@@ -24,10 +24,10 @@ class NavigatorService {
   }
 
   void pop() {
-    navigatorKey.currentState.pop();
+    navigatorKey.currentState!.pop();
   }
 
   void popToRoot() {
-    navigatorKey.currentState.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

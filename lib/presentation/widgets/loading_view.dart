@@ -9,12 +9,12 @@ class LoadingView extends StatefulWidget {
   static var slowTitle = 'still working…';
   static var verySlowTitle = 'it is taking a little bit longer than usual…';
 
-  final String title;
-  final String inpatientLevel1Message; // has default value
-  final String inpatientLevel2Message; // has default value
+  final String? title;
+  final String? inpatientLevel1Message; // has default value
+  final String? inpatientLevel2Message; // has default value
 
   LoadingView({
-    Key key,
+    Key? key,
     this.title,
     this.inpatientLevel1Message,
     this.inpatientLevel2Message,
@@ -24,43 +24,39 @@ class LoadingView extends StatefulWidget {
   _LoadingViewState createState() => _LoadingViewState();
 }
 
-class _LoadingViewState extends State<LoadingView>
-    with TickerProviderStateMixin {
+class _LoadingViewState extends State<LoadingView> with TickerProviderStateMixin {
   final contentKey = GlobalKey();
   final stackKey = GlobalKey();
 
-  Timer inpatientTimer;
-  AnimationController inpatientController;
-  Animation<double> inpatientFadeIn;
-  String inpatientMsg;
-  double inpatientMsgPosition;
+  Timer? inpatientTimer;
+  late AnimationController inpatientController;
+  late Animation<double> inpatientFadeIn;
+  String? inpatientMsg;
+  double? inpatientMsgPosition;
 
   @override
   void initState() {
     configureDelayedInpatientMsgs();
 
-    inpatientController = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this);
-    inpatientFadeIn =
-        Tween<double>(begin: 0.0, end: 1.0).animate(inpatientController)
-          ..addListener(() {
-            setState(() {});
-          });
+    inpatientController = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    inpatientFadeIn = Tween<double>(begin: 0.0, end: 1.0).animate(inpatientController)
+      ..addListener(() {
+        setState(() {});
+      });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => calculateInpatientPosition(context));
+    WidgetsBinding.instance?.addPostFrameCallback((_) => calculateInpatientPosition(context));
 
-    Widget titleWidget;
+    Widget? titleWidget;
     if (widget.title != null) {
       titleWidget = Padding(
         padding: EdgeInsets.only(top: medium),
         child: Text(
-          widget.title,
+          widget.title!,
           style: Theme.of(context).textTheme.headline3,
           textAlign: TextAlign.center,
         ),
@@ -93,7 +89,7 @@ class _LoadingViewState extends State<LoadingView>
           child: Opacity(
             opacity: inpatientFadeIn.value,
             child: Text(
-              inpatientMsg,
+              inpatientMsg!,
               style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             ),
@@ -132,27 +128,26 @@ class _LoadingViewState extends State<LoadingView>
         }
 
         setState(() {
-          inpatientMsg =
-              widget.inpatientLevel2Message ?? LoadingView.verySlowTitle;
+          inpatientMsg = widget.inpatientLevel2Message ?? LoadingView.verySlowTitle;
         });
       });
     });
   }
 
   void calculateInpatientPosition(BuildContext context) {
-    double inpatientMsgPosition;
+    var inpatientMsgPosition = 0.0;
 
     if (stackKey.currentContext != null && contentKey.currentContext != null) {
-      final stackRB = stackKey.currentContext.findRenderObject() as RenderBox;
-      final stackPosition = stackRB.localToGlobal(Offset.zero);
-      final contentRB =
-          contentKey.currentContext.findRenderObject() as RenderBox;
-      final contentPosition = contentRB.localToGlobal(Offset.zero);
+      final stackRB = stackKey.currentContext?.findRenderObject() as RenderBox?;
+      final stackPosition = stackRB?.localToGlobal(Offset.zero);
+      final contentRB = contentKey.currentContext?.findRenderObject() as RenderBox?;
+      final contentPosition = contentRB?.localToGlobal(Offset.zero);
       final extraSpace = (widget.title == null) ? medium : xSmall;
-      inpatientMsgPosition = contentPosition.dy -
-          stackPosition.dy +
-          contentRB.size.height +
-          extraSpace;
+
+      if (contentPosition == null || stackPosition == null || contentRB == null) {
+        return;
+      }
+      inpatientMsgPosition = contentPosition.dy - stackPosition.dy + contentRB.size.height + extraSpace;
     }
 
     if (this.inpatientMsgPosition != inpatientMsgPosition) {

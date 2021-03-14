@@ -10,11 +10,11 @@ class DeleteAlert extends StatelessWidget {
   final String cancelButton;
 
   DeleteAlert({
-    Key key,
-    @required this.title,
-    @required this.body,
-    @required this.deleteButton,
-    @required this.cancelButton,
+    Key? key,
+    required this.title,
+    required this.body,
+    required this.deleteButton,
+    required this.cancelButton,
   }) : super(key: key);
 
   @override

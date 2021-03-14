@@ -15,6 +15,7 @@ class ExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return App(
+      providers: [],
       theme: lightTheme(),
       home: ScreenScaffold(
         appBarTitle: 'Example',

@@ -7,11 +7,11 @@ import 'unsaved_changes_alert/unsaved_changes_alert.dart';
 
 class DismissButton extends StatelessWidget {
   final ExitType exitType;
-  final Function onDismiss;
+  final Function? onDismiss;
 
   DismissButton({
-    Key key,
-    this.exitType,
+    Key? key,
+    required this.exitType,
     this.onDismiss,
   }) : super(key: key);
 
@@ -27,7 +27,7 @@ class DismissButton extends StatelessWidget {
         FocusScope.of(context).unfocus();
 
         if (exitType == ExitType.warning) {
-          if ((await UnsavedChangesAlert.ask(context)) ?? false) {
+          if (await UnsavedChangesAlert.ask(context)) {
             _dismiss(context);
           }
         } else {
@@ -37,6 +37,5 @@ class DismissButton extends StatelessWidget {
     );
   }
 
-  void _dismiss(BuildContext context) =>
-      onDismiss != null ? onDismiss() : Navigator.of(context).pop();
+  void _dismiss(BuildContext context) => onDismiss != null ? onDismiss!() : Navigator.of(context).pop();
 }

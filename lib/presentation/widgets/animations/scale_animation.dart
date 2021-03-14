@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ScaleAnimation extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final double scale;
   final Duration duration;
 
   ScaleAnimation({
-    Key key,
+    Key? key,
     this.child,
     this.scale = 0.8,
     this.duration = const Duration(seconds: 1),
@@ -16,10 +16,9 @@ class ScaleAnimation extends StatefulWidget {
   _ScaleAnimationState createState() => _ScaleAnimationState();
 }
 
-class _ScaleAnimationState extends State<ScaleAnimation>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+class _ScaleAnimationState extends State<ScaleAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -64,8 +63,7 @@ class _ScaleAnimationState extends State<ScaleAnimation>
     }
 
     if (oldWidget.scale != widget.scale) {
-      animation =
-          Tween<double>(begin: 1, end: widget.scale).animate(controller);
+      animation = Tween<double>(begin: 1, end: widget.scale).animate(controller);
     }
   }
 }

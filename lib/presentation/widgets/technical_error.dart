@@ -4,9 +4,8 @@ import '../utils/theme/space.dart';
 
 class TechnicalError extends StatelessWidget {
   static var title = 'Oops! Something went wrong.';
-  static var subtitle =
-      'Our team is already working on it.\nPlease try again later.';
-  TechnicalError({Key key}) : super(key: key);
+  static var subtitle = 'Our team is already working on it.\nPlease try again later.';
+  TechnicalError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

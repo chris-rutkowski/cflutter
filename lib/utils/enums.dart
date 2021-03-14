@@ -16,8 +16,6 @@ extension OperationStatusViewType on OperationStatus {
         return ViewType.error;
       case OperationStatus.complete:
         return complete;
-      default:
-        return null;
     }
   }
 }

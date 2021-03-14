@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class HeartAnimation extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final double firstScale;
   final double secondScale;
 
   HeartAnimation({
-    Key key,
+    Key? key,
     this.child,
     this.firstScale = 0.8,
     this.secondScale = 0.7,
@@ -16,9 +16,8 @@ class HeartAnimation extends StatefulWidget {
   _HeartAnimationState createState() => _HeartAnimationState();
 }
 
-class _HeartAnimationState extends State<HeartAnimation>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
+class _HeartAnimationState extends State<HeartAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
 
   @override
   void initState() {

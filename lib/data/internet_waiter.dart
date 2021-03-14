@@ -14,21 +14,21 @@ abstract class InternetWaiter {
 }
 
 class InternetWaiterImpl implements InternetWaiter {
-  final Uri _fallbackUrl;
+  final Uri? _fallbackUrl;
   final Duration _seemsOnlineRefreshDuration;
   bool _disposed = false;
 
   @override
-  bool seemsOnline;
+  bool seemsOnline = true;
 
-  InternetWaiterImpl._([
+  InternetWaiterImpl._(
     this._seemsOnlineRefreshDuration,
     this._fallbackUrl,
-  ]);
+  );
 
   factory InternetWaiterImpl({
     Duration seemsOnlineRefreshDuration = const Duration(seconds: 10),
-    Uri fallbackUrl,
+    Uri? fallbackUrl,
   }) =>
       InternetWaiterImpl._(seemsOnlineRefreshDuration, fallbackUrl).._checkSeemsOnline();
 
@@ -49,7 +49,7 @@ class InternetWaiterImpl implements InternetWaiter {
 
   @override
   Future<void> wait() async {
-    if (await isOnline) return true;
+    if (await isOnline) return;
 
     await Future.delayed(Duration(milliseconds: 1000));
     return await wait();
@@ -60,7 +60,7 @@ class InternetWaiterImpl implements InternetWaiter {
 
     if (result == false && _fallbackUrl != null) {
       try {
-        await http.get(_fallbackUrl);
+        await http.get(_fallbackUrl!);
         result = true;
       } catch (_) {}
     }
@@ -107,10 +107,10 @@ class InternetWaiterImpl implements InternetWaiter {
     const dnsPort = 53;
     const timeout = Duration(seconds: 3);
 
-    Socket socket;
+    Socket? socket;
     try {
       socket = await Socket.connect(dnsAddress, dnsPort, timeout: timeout);
-      socket?.destroy();
+      socket.destroy();
       return true;
     } on SocketException {
       socket?.destroy();

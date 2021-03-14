@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../utils/theme/space.dart';
 
 class NoInternet extends StatelessWidget {
-  NoInternet({Key key}) : super(key: key);
+  NoInternet({Key? key}) : super(key: key);
 
   static var title = 'No Internet';
   static var subtitle =
       'Your device is not connected to the Internet. Please check your WiFi or mobile data connection.';
-  static Widget Function(BuildContext context) extra;
+  static Widget Function(BuildContext context)? extra;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class NoInternet extends StatelessWidget {
     if (extra != null) {
       extraWidgets.addAll([
         SizedBox(height: small),
-        extra(context),
+        extra!(context),
       ]);
     }
 
@@ -32,7 +32,7 @@ class NoInternet extends StatelessWidget {
               Icon(
                 Icons.cloud_off,
                 size: 96,
-                color: Theme.of(context).textTheme.headline3.color,
+                color: Theme.of(context).textTheme.headline3?.color,
               ),
               SizedBox(height: medium),
               Text(

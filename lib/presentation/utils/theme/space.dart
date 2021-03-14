@@ -1,5 +1,7 @@
+const double xxxSmall = 2;
 const double xxSmall = 4;
 const double xSmall = 8;
+const double small12 = 12;
 const double small = 16;
 const double small2 = 24;
 const double medium = 32;

@@ -5,14 +5,14 @@ class CustomDivider extends StatelessWidget {
   final bool focus;
 
   CustomDivider({
-    Key key,
+    Key? key,
     this.error = false,
     this.focus = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final thickness = error ? 2.0 : 1.0;
+    final thickness = error ? 2.0 : Theme.of(context).dividerTheme.thickness;
 
     return Divider(
       thickness: thickness,

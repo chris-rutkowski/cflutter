@@ -5,30 +5,30 @@ import '../custom_divider.dart';
 import 'text_field_cell_keys.dart';
 
 class TextFieldCell extends StatefulWidget {
-  final bool enabled;
-  final String header;
-  final String information;
-  final String hint;
+  final bool? enabled;
+  final String? header;
+  final String? information;
+  final String? hint;
   final TextCapitalization textCapitalization;
-  final TextInputType keyboardType;
-  final int maxLength;
+  final TextInputType? keyboardType;
+  final int? maxLength;
   final bool maxLengthEnforced;
-  final String error;
-  final String value;
-  final Widget prefix;
-  final Widget suffix;
-  final ValueChanged<String> onChanged;
-  final TextEditingController textEditingController;
+  final String? error;
+  final String? value;
+  final Widget? prefix;
+  final Widget? suffix;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? textEditingController;
   final bool autofocus;
   final int maxLines;
   final bool displayCharacterCounter;
   final bool obscureText;
-  final ValueChanged<String> onSubmitted;
+  final ValueChanged<String>? onSubmitted;
   final bool autocorrect;
-  final TextInputAction textInputAction;
+  final TextInputAction? textInputAction;
 
   TextFieldCell({
-    Key key,
+    Key? key,
     this.enabled,
     this.header,
     this.information,
@@ -58,7 +58,7 @@ class TextFieldCell extends StatefulWidget {
 
 class _TextFieldCellState extends State<TextFieldCell> {
   final focusNode = FocusNode();
-  TextEditingController controller;
+  late TextEditingController controller;
   bool _ownController = false;
 
   @override
@@ -66,13 +66,13 @@ class _TextFieldCellState extends State<TextFieldCell> {
     super.initState();
 
     if (widget.textEditingController != null) {
-      controller = widget.textEditingController;
+      controller = widget.textEditingController!;
     } else {
       controller = TextEditingController();
       _ownController = true;
     }
 
-    if (widget.value != null) controller.text = widget.value;
+    if (widget.value != null) controller.text = widget.value ?? '';
 
     controller.addListener(() {
       if (!mounted) {
@@ -83,7 +83,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         if (widget.onChanged != null) {
-          widget.onChanged(controller.text);
+          widget.onChanged!(controller.text);
         }
       }
 
@@ -107,7 +107,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
     if (widget.header != null) {
       children.add(
         Text(
-          widget.header,
+          widget.header!,
           key: Key(TextFieldCellKeys.header),
           style: Theme.of(context).textTheme.headline3,
         ),
@@ -118,7 +118,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
     if (widget.information != null) {
       children.add(
         Text(
-          widget.information,
+          widget.information!,
           key: Key(TextFieldCellKeys.information),
           style: Theme.of(context).textTheme.bodyText1,
         ),
@@ -139,10 +139,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
       style: Theme.of(context).textTheme.bodyText1,
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .bodyText1
-            .copyWith(color: Theme.of(context).hintColor),
+        hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(color: Theme.of(context).hintColor),
         counter: Offstage(),
         contentPadding: EdgeInsets.zero,
         isDense: true,
@@ -182,12 +179,9 @@ class _TextFieldCellState extends State<TextFieldCell> {
 
       if (widget.error != null) {
         errorText = Text(
-          widget.error,
+          widget.error!,
           key: Key(TextFieldCellKeys.errorMessage),
-          style: Theme.of(context)
-              .textTheme
-              .caption
-              .copyWith(color: Theme.of(context).colorScheme.error),
+          style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).colorScheme.error),
         );
       } else {
         errorText = Container();
@@ -250,7 +244,7 @@ class _TextFieldCellState extends State<TextFieldCell> {
 
     if (oldWidget.value != widget.value) {
       controller.value = TextEditingValue(
-        text: widget.value,
+        text: widget.value ?? '',
         selection: controller.selection,
       );
     }

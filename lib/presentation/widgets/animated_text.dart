@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 class AnimatedText extends StatefulWidget {
   final String data;
-  final TextStyle style;
+  final TextStyle? style;
   final Duration duration;
 
-  const AnimatedText(this.data, {Key key, this.style, @required this.duration}) : super(key: key);
+  const AnimatedText(this.data, {Key? key, this.style, required this.duration}) : super(key: key);
 
   @override
   _AnimatedTextState createState() => _AnimatedTextState();
 }
 
 class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<Color> colorAnimation;
+  late AnimationController controller;
+  late Animation<Color?> colorAnimation;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderSt
       builder: (context, _) {
         return Text(
           widget.data,
-          style: widget.style?.copyWith(color: colorAnimation?.value),
+          style: widget.style?.copyWith(color: colorAnimation.value),
         );
       },
     );

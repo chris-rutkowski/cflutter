@@ -8,27 +8,27 @@ import 'presentation/widgets/appearance_notifier.dart';
 import 'presentation/widgets/processing_view.dart';
 
 class App extends StatelessWidget {
-  final TransitionBuilder builder;
-  final Locale locale;
-  final Widget home;
-  final ThemeData theme;
-  final ThemeData darkTheme;
-  final ThemeMode themeMode;
+  final TransitionBuilder? builder;
+  final Locale? locale;
+  final Widget? home;
+  final ThemeData? theme;
+  final ThemeData? darkTheme;
+  final ThemeMode? themeMode;
   final List<SingleChildWidget> providers;
   final bool debugShowCheckedModeBanner;
   final Map<String, WidgetBuilder> routes;
-  final Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates;
+  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final Iterable<Locale> supportedLocales;
 
   App({
-    Key key,
+    Key? key,
     this.builder,
     this.locale,
-    @required this.home,
-    @required this.theme,
+    this.home,
+    this.theme,
     this.darkTheme,
     this.themeMode,
-    this.providers,
+    required this.providers,
     this.debugShowCheckedModeBanner = true,
     this.routes = const <String, WidgetBuilder>{},
     this.localizationsDelegates,
@@ -44,7 +44,7 @@ class App extends StatelessWidget {
           lazy: false,
         ),
         Provider(create: (_) => NavigatorService()),
-        ...(providers ?? [])
+        ...providers
       ],
       child: MaterialApp(
         localizationsDelegates: localizationsDelegates,
@@ -56,7 +56,7 @@ class App extends StatelessWidget {
         navigatorObservers: [appearanceRouteObserver],
         builder: (context, navigator) {
           if (builder != null) {
-            return builder(context, _content(context, navigator));
+            return builder!(context, _content(context, navigator));
           }
           return _content(context, navigator);
         },
@@ -68,23 +68,26 @@ class App extends StatelessWidget {
     );
   }
 
-  Widget _content(BuildContext context, Widget navigator) {
-    return Stack(
-      children: <Widget>[
-        navigator,
-        Consumer<Processing>(
-          builder: (context, model, _) {
-            return AnimatedOpacity(
-              opacity: model.processing == null ? 0 : 1,
-              duration: Duration(milliseconds: 300),
-              child: ProcessingView(
-                processingState: model.processing,
-                data: model.processingViewData,
-              ),
-            );
-          },
-        ),
-      ],
-    );
+  Widget _content(BuildContext context, Widget? navigator) {
+    final children = <Widget>[];
+
+    if (navigator != null) {
+      children.add(navigator);
+    }
+
+    children.add(Consumer<Processing>(
+      builder: (context, model, _) {
+        return AnimatedOpacity(
+          opacity: model.processing == null ? 0 : 1,
+          duration: Duration(milliseconds: 300),
+          child: ProcessingView(
+            processingState: model.processing,
+            data: model.processingViewData,
+          ),
+        );
+      },
+    ));
+
+    return Stack(children: children);
   }
 }

@@ -5,16 +5,16 @@ import 'unsaved_changes_alert_keys.dart';
 
 class UnsavedChangesAlert extends StatelessWidget {
   static var title = 'Want to discard your changes?';
-  static var subtitle =
-      'You will lose your changes if you continue without saving them.';
+  static var subtitle = 'You will lose your changes if you continue without saving them.';
   static var confirm = 'Discard';
   static var cancel = 'Cancel';
 
-  static Future<bool> ask(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (_) => UnsavedChangesAlert(),
-    );
+  static Future<bool> ask(BuildContext context) async {
+    return (await showDialog<bool>(
+          context: context,
+          builder: (_) => UnsavedChangesAlert(),
+        )) ??
+        false;
   }
 
   @override

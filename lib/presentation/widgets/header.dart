@@ -7,7 +7,7 @@ class Header extends StatelessWidget {
   static var headerToBodyMargin = small;
 
   final text;
-  final Widget leading;
+  final Widget? leading;
   final body;
 
   /// Default Medium padding is to be used for very first header in the list
@@ -15,7 +15,7 @@ class Header extends StatelessWidget {
   final double topPadding;
 
   Header({
-    Key key,
+    Key? key,
     this.text,
     this.leading,
     this.body,
@@ -79,10 +79,10 @@ class Header extends StatelessWidget {
     }
   }
 
-  Widget _body(BuildContext context) {
+  Widget? _body(BuildContext context) {
     if (body is String) {
       return Text(
-        (body as String) ?? '',
+        (body as String),
         key: Key(K.Header.body),
         style: Theme.of(context).textTheme.bodyText1,
       );

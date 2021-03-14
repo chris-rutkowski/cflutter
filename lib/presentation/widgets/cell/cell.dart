@@ -31,15 +31,15 @@ class Cell extends StatelessWidget {
 
   final header;
   final body;
-  final int bodyMaxLines;
-  final Accessory accessory;
-  final String error;
-  final GestureTapCallback onTap;
-  final GestureLongPressCallback onLongPress;
+  final int? bodyMaxLines;
+  final Accessory? accessory;
+  final String? error;
+  final GestureTapCallback? onTap;
+  final GestureLongPressCallback? onLongPress;
   final bool showSeparator;
 
   Cell({
-    Key key,
+    Key? key,
     this.header,
     this.body,
     this.bodyMaxLines,
@@ -73,7 +73,7 @@ class Cell extends StatelessWidget {
             child: Radio(
               groupValue: true,
               value: radioAccessory.checked,
-              onChanged: onTap != null ? (_) => onTap() : null,
+              onChanged: onTap != null ? (_) => onTap!() : null,
             ),
           ),
           // hidden text widget for UI Tests
@@ -96,7 +96,7 @@ class Cell extends StatelessWidget {
             height: 18,
             child: Checkbox(
               value: checkboxAccessory.checked,
-              onChanged: onTap != null ? (_) => onTap() : null,
+              onChanged: onTap != null ? (_) => onTap!() : null,
             ),
           ),
           // hidden text widget for UI Tests
@@ -154,7 +154,7 @@ class Cell extends StatelessWidget {
                   child: Text(
                     error ?? '',
                     key: Key(CellKeys.error),
-                    style: Theme.of(context).textTheme.caption.copyWith(color: Theme.of(context).colorScheme.error),
+                    style: Theme.of(context).textTheme.caption?.copyWith(color: Theme.of(context).colorScheme.error),
                   ),
                 ),
               ),

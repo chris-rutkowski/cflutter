@@ -13,31 +13,31 @@ import '../unsaved_changes_alert/unsaved_changes_alert.dart';
 import 'screen_scaffold_keys.dart' as K;
 
 class ScreenScaffold extends StatelessWidget {
-  final Widget customAppBar;
-  final ScrollController scrollController;
-  final Function(Appearance) onAppearanceChanged;
-  final List<Widget> Function(BuildContext) children;
-  final Widget Function(BuildContext) body;
+  final Widget? customAppBar;
+  final ScrollController? scrollController;
+  final Function(Appearance)? onAppearanceChanged;
+  final List<Widget> Function(BuildContext)? children;
+  final Widget Function(BuildContext)? body;
   final ExitType exitType;
   final ViewType viewType;
-  final String appBarTitle;
-  final Widget appBarTitleWidget;
-  final VoidCallback appBarOnDismiss;
+  final String? appBarTitle;
+  final Widget? appBarTitleWidget;
+  final VoidCallback? appBarOnDismiss;
   final double appBarElevationOffset;
-  final bool appBarCenterTitle;
-  final List<Widget> appBarActions;
-  final PreferredSizeWidget appBarBottom;
-  final Color backgroundColor;
+  final bool? appBarCenterTitle;
+  final List<Widget>? appBarActions;
+  final PreferredSizeWidget? appBarBottom;
+  final Color? backgroundColor;
 
   ScreenScaffold({
-    Key key,
+    Key? key,
     this.customAppBar,
     this.scrollController,
     this.onAppearanceChanged,
     this.children,
     this.body,
     this.exitType = ExitType.arrow,
-    this.viewType,
+    this.viewType = ViewType.normal,
     this.appBarTitle,
     this.appBarTitleWidget,
     this.appBarOnDismiss,
@@ -65,7 +65,7 @@ class ScreenScaffold extends StatelessWidget {
           titleSpacing: exitType == ExitType.hidden ? NavigationToolbar.kMiddleSpacing : 0,
           scrollController: scrollController ?? PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
-          title: appBarTitleWidget ?? Text(appBarTitle),
+          title: appBarTitleWidget ?? Text(appBarTitle!),
           actions: appBarActions,
           bottom: appBarBottom,
         ),
@@ -83,13 +83,13 @@ class ScreenScaffold extends StatelessWidget {
     } else {
       return Builder(
         builder: (context) => body != null
-            ? body(context)
+            ? body!(context)
             : ListView(
                 key: Key(K.list),
                 controller: scrollController ?? PrimaryScrollController.of(context),
                 physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.only(bottom: medium),
-                children: children(context),
+                children: children!(context),
               ),
       );
     }
@@ -122,8 +122,7 @@ class ScreenScaffold extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: customAppBar == null ? _appBar(context) : null,
       body: AppearanceNotifier(
-        onAppearanceChanged:
-            onAppearanceChanged != null ? (v) => onAppearanceChanged(v ? Appearance.visit : Appearance.leave) : null,
+        onAppearanceChanged: onAppearanceChanged,
         child: Column(
           children: [
             customAppBar ?? Container(),

@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import '../../presentation/widgets/processing_view.dart';
 
 class Processing with ChangeNotifier {
-  ProcessingState get processing => _processing;
-  ProcessingState _processing;
+  ProcessingState? get processing => _processing;
+  ProcessingState? _processing;
 
   static Processing of(BuildContext context) => Provider.of<Processing>(context, listen: false);
 
-  String _processingTitle;
-  String _completedTitle;
-  IconData _completedIcon;
+  String? _processingTitle;
+  String? _completedTitle;
+  IconData? _completedIcon;
 
   ProcessingViewData get processingViewData => ProcessingViewData(
       processingTitle: _processingTitle, completedTitle: _completedTitle, completedIcon: _completedIcon);

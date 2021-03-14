@@ -8,9 +8,9 @@ import 'loading_view.dart';
 enum ProcessingState { processing, completed }
 
 class ProcessingViewData {
-  final String processingTitle;
-  final String completedTitle;
-  final IconData completedIcon;
+  final String? processingTitle;
+  final String? completedTitle;
+  final IconData? completedIcon;
 
   ProcessingViewData({
     this.processingTitle,
@@ -20,31 +20,30 @@ class ProcessingViewData {
 }
 
 class ProcessingView extends StatefulWidget {
-  final ProcessingState processingState; // nullable
+  final ProcessingState? processingState;
   final ProcessingViewData data;
 
   ProcessingView({
-    Key key,
+    Key? key,
     this.processingState,
-    @required this.data,
+    required this.data,
   }) : super(key: key);
 
   @override
   _ProcessingViewState createState() => _ProcessingViewState();
 }
 
-class _ProcessingViewState extends State<ProcessingView>
-    with TickerProviderStateMixin {
-  AnimationController completedController;
-  Animation<double> processingFadeOut;
-  Animation<double> completedFadeIn;
-  Animation<double> completedMoveUp;
+class _ProcessingViewState extends State<ProcessingView> with TickerProviderStateMixin {
+  late AnimationController completedController;
+  late Animation<double> processingFadeOut;
+  late Animation<double> completedFadeIn;
+  late Animation<double> completedMoveUp;
 
-  AnimationController processingController;
-  Animation<double> processingFadeIn;
+  late AnimationController processingController;
+  late Animation<double> processingFadeIn;
 
-  AnimationController glassFadeInController;
-  Animation<double> glassFadeIn;
+  late AnimationController glassFadeInController;
+  late Animation<double> glassFadeIn;
 
   final processingViewColumnKey = GlobalKey();
   final stackKey = GlobalKey();
@@ -52,8 +51,7 @@ class _ProcessingViewState extends State<ProcessingView>
   @override
   void initState() {
     super.initState();
-    completedController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this)
+    completedController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this)
       ..addListener(() {
         setState(() {});
       });
@@ -79,8 +77,7 @@ class _ProcessingViewState extends State<ProcessingView>
       ),
     );
 
-    processingController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this)
+    processingController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this)
       ..addListener(() {
         setState(() {});
       });
@@ -92,8 +89,7 @@ class _ProcessingViewState extends State<ProcessingView>
       ),
     );
 
-    glassFadeInController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this)
+    glassFadeInController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this)
       ..addListener(() {
         setState(() {});
       });
@@ -143,13 +139,11 @@ class _ProcessingViewState extends State<ProcessingView>
       glassFadeInController.value = 1;
       processingController.value = 1;
       completedController.forward();
-    } else if (oldWidget.processingState == null &&
-        widget.processingState == ProcessingState.processing) {
+    } else if (oldWidget.processingState == null && widget.processingState == ProcessingState.processing) {
       processingController.forward(from: 0);
       glassFadeInController.forward(from: 0);
       completedController.reset();
-    } else if (oldWidget.processingState == null &&
-        widget.processingState == ProcessingState.completed) {
+    } else if (oldWidget.processingState == null && widget.processingState == ProcessingState.completed) {
       processingController.reset();
       glassFadeInController.forward(from: 0);
       completedController.forward(from: 0);
@@ -160,8 +154,8 @@ class _ProcessingViewState extends State<ProcessingView>
   Widget build(BuildContext context) {
     var children = <Widget>[
       WillPopScope(
-        child: Container(),
         onWillPop: () async => false,
+        child: Container(),
       )
     ];
 
@@ -203,7 +197,7 @@ class _ProcessingViewState extends State<ProcessingView>
 
 class _Glass extends StatelessWidget {
   final double fadeIn;
-  _Glass({Key key, this.fadeIn}) : super(key: key);
+  _Glass({Key? key, required this.fadeIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -217,10 +211,7 @@ class _Glass extends StatelessWidget {
           sigmaY: fadeIn * 8,
         ),
         child: Container(
-          color: Theme.of(context)
-              .colorScheme
-              .background
-              .withOpacity(fadeIn * 0.60),
+          color: Theme.of(context).colorScheme.background.withOpacity(fadeIn * 0.60),
         ),
       ),
     );
