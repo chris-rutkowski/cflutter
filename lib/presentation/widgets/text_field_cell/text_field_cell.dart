@@ -20,7 +20,7 @@ class TextFieldCell extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? textEditingController;
   final bool autofocus;
-  final int maxLines;
+  final int? maxLines;
   final bool displayCharacterCounter;
   final bool obscureText;
   final ValueChanged<String>? onSubmitted;
