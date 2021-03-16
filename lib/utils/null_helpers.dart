@@ -1,4 +1,4 @@
-extension IsNullOrEmpty on String {
+extension IsNullOrEmpty on String? {
   bool get isNullOrEmpty => this == null || '' == this;
   bool get isNotNullOrEmpty => !isNullOrEmpty;
 }
