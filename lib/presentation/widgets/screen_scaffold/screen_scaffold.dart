@@ -18,6 +18,7 @@ class ScreenScaffold extends StatelessWidget {
   final Function(Appearance)? onAppearanceChanged;
   final List<Widget> Function(BuildContext)? children;
   final Widget Function(BuildContext)? body;
+  final Widget? drawer;
   final ExitType exitType;
   final ViewType viewType;
   final String? appBarTitle;
@@ -36,6 +37,7 @@ class ScreenScaffold extends StatelessWidget {
     this.onAppearanceChanged,
     this.children,
     this.body,
+    this.drawer,
     this.exitType = ExitType.arrow,
     this.viewType = ViewType.normal,
     this.appBarTitle,
@@ -121,6 +123,7 @@ class ScreenScaffold extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: customAppBar == null ? _appBar(context) : null,
+      drawer: drawer,
       body: AppearanceNotifier(
         onAppearanceChanged: onAppearanceChanged,
         child: Column(
