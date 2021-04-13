@@ -23,6 +23,7 @@ class ScreenScaffold extends StatelessWidget {
   final ViewType viewType;
   final String? appBarTitle;
   final Widget? appBarTitleWidget;
+  final Widget? appBarLeading;
   final VoidCallback? appBarOnDismiss;
   final double appBarElevationOffset;
   final bool? appBarCenterTitle;
@@ -42,6 +43,7 @@ class ScreenScaffold extends StatelessWidget {
     this.viewType = ViewType.normal,
     this.appBarTitle,
     this.appBarTitleWidget,
+    this.appBarLeading,
     this.appBarOnDismiss,
     this.appBarElevationOffset = medium,
     this.appBarCenterTitle,
@@ -57,13 +59,14 @@ class ScreenScaffold extends StatelessWidget {
         builder: (context) => ElevatedOnScrollAppBar(
           centerTitle: appBarCenterTitle,
           automaticallyImplyLeading: exitType != ExitType.hidden,
-          leading: [ExitType.hidden, ExitType.disabled].contains(exitType)
-              ? null
-              : DismissButton(
-                  key: Key(K.dismissButton),
-                  exitType: exitType,
-                  onDismiss: appBarOnDismiss,
-                ),
+          leading: appBarLeading ??
+              ([ExitType.hidden, ExitType.disabled].contains(exitType)
+                  ? null
+                  : DismissButton(
+                      key: Key(K.dismissButton),
+                      exitType: exitType,
+                      onDismiss: appBarOnDismiss,
+                    )),
           titleSpacing: exitType == ExitType.hidden ? NavigationToolbar.kMiddleSpacing : 0,
           scrollController: scrollController ?? PrimaryScrollController.of(context),
           minOffsetForElevation: appBarElevationOffset,
