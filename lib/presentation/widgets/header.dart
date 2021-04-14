@@ -8,6 +8,7 @@ class Header extends StatelessWidget {
 
   final text;
   final Widget? leading;
+  final Widget? trailing;
   final body;
 
   /// Default Medium padding is to be used for very first header in the list
@@ -18,6 +19,7 @@ class Header extends StatelessWidget {
     Key? key,
     this.text,
     this.leading,
+    this.trailing,
     this.body,
     this.topPadding = medium,
   }) : super(key: key);
@@ -27,6 +29,14 @@ class Header extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(right: small),
       child: leading,
+    );
+  }
+
+  Widget _trailingWithPadding(BuildContext context) {
+    if (trailing == null) return Container();
+    return Padding(
+      padding: EdgeInsets.only(right: small),
+      child: trailing,
     );
   }
 
@@ -50,6 +60,7 @@ class Header extends StatelessWidget {
                 Expanded(
                   child: _header(context),
                 ),
+                _trailingWithPadding(context),
               ],
             ),
             Visibility(
