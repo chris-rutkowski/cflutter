@@ -35,7 +35,7 @@ class Header extends StatelessWidget {
   Widget _trailingWithPadding(BuildContext context) {
     if (trailing == null) return Container();
     return Padding(
-      padding: EdgeInsets.only(right: small),
+      padding: EdgeInsets.only(left: small),
       child: trailing,
     );
   }
