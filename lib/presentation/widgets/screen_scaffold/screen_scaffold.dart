@@ -6,9 +6,7 @@ import '../../utils/theme/space.dart';
 import '../appearance_notifier.dart';
 import '../dismiss_button.dart';
 import '../elevated_on_scroll_app_bar.dart';
-import '../loading_view.dart';
-import '../no_internet.dart';
-import '../technical_error.dart';
+import '../fragment/fragment.dart';
 import '../unsaved_changes_alert/unsaved_changes_alert.dart';
 import 'screen_scaffold_keys.dart' as K;
 
@@ -79,25 +77,22 @@ class ScreenScaffold extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    if (viewType == ViewType.offline) {
-      return NoInternet(key: Key(K.noInternet));
-    } else if (viewType == ViewType.error) {
-      return TechnicalError(key: Key(K.technicalError));
-    } else if (viewType == ViewType.loading) {
-      return LoadingView(key: Key(K.loadingView));
-    } else {
-      return Builder(
-        builder: (context) => body != null
-            ? body!(context)
-            : ListView(
-                key: Key(K.list),
-                controller: scrollController ?? PrimaryScrollController.of(context),
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: medium),
-                children: children!(context),
-              ),
-      );
-    }
+    return Fragment(
+      viewType: viewType,
+      builder: (context) {
+        if (body != null) {
+          return body!(context);
+        }
+
+        return ListView(
+          key: Key(K.list),
+          controller: scrollController ?? PrimaryScrollController.of(context),
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.only(bottom: medium),
+          children: children!(context),
+        );
+      },
+    );
   }
 
   Widget _onPopScope(BuildContext context) {
