@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class SpaceBetweenColumn extends StatelessWidget {
-  final List<Widget> children;
   final MainAxisSize mainAxisSize;
   final CrossAxisAlignment crossAxisAlignment;
   final double spacing;
+  final List<Widget> children;
 
   SpaceBetweenColumn({
     Key? key,
-    required this.children,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     required this.spacing,
+    required this.children,
   }) : super(key: key);
 
   @override
