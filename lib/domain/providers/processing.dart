@@ -12,9 +12,14 @@ class Processing with ChangeNotifier {
   String? _processingTitle;
   String? _completedTitle;
   IconData? _completedIcon;
+  Widget? _completedChild;
 
   ProcessingViewData get processingViewData => ProcessingViewData(
-      processingTitle: _processingTitle, completedTitle: _completedTitle, completedIcon: _completedIcon);
+        processingTitle: _processingTitle,
+        completedTitle: _completedTitle,
+        completedIcon: _completedIcon,
+        completedChild: _completedChild,
+      );
 
   void start(String title) {
     _processingTitle = title;
@@ -24,10 +29,12 @@ class Processing with ChangeNotifier {
 
   void complete(
     String title, {
-    IconData completedIcon = Icons.cloud_done,
+    IconData icon = Icons.cloud_done,
+    Widget? child,
   }) async {
     _completedTitle = title;
-    _completedIcon = completedIcon;
+    _completedIcon = icon;
+    _completedChild = child;
     _processing = ProcessingState.completed;
     notifyListeners();
 

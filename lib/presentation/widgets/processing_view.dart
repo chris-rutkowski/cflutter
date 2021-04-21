@@ -11,12 +11,9 @@ class ProcessingViewData {
   final String? processingTitle;
   final String? completedTitle;
   final IconData? completedIcon;
+  final Widget? completedChild;
 
-  ProcessingViewData({
-    this.processingTitle,
-    this.completedTitle,
-    this.completedIcon = Icons.cloud_done,
-  });
+  ProcessingViewData({this.processingTitle, this.completedTitle, this.completedIcon, this.completedChild});
 }
 
 class ProcessingView extends StatefulWidget {
@@ -114,11 +111,12 @@ class _ProcessingViewState extends State<ProcessingView> with TickerProviderStat
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Icon(
-          widget.data.completedIcon,
-          color: Theme.of(context).colorScheme.primary,
-          size: 96,
-        ),
+        widget.data.completedChild ??
+            Icon(
+              widget.data.completedIcon,
+              color: Theme.of(context).colorScheme.primary,
+              size: 96,
+            ),
         SizedBox(height: medium),
         Text(
           widget.data.completedTitle ?? '',
