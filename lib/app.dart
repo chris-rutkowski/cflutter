@@ -69,25 +69,9 @@ class App extends StatelessWidget {
   }
 
   Widget _content(BuildContext context, Widget? navigator) {
-    final children = <Widget>[];
-
-    if (navigator != null) {
-      children.add(navigator);
-    }
-
-    children.add(Consumer<Processing>(
-      builder: (context, model, _) {
-        return AnimatedOpacity(
-          opacity: model.processing == null ? 0 : 1,
-          duration: Duration(milliseconds: 300),
-          child: ProcessingView(
-            processingState: model.processing,
-            data: model.processingViewData,
-          ),
-        );
-      },
-    ));
-
-    return Stack(children: children);
+    return Stack(children: [
+      if (navigator != null) navigator,
+      ProcessingViewWrapper(),
+    ]);
   }
 }

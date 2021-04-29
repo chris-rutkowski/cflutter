@@ -1,11 +1,29 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../domain/providers/processing.dart';
 import '../utils/theme/space.dart';
 import 'loading_view.dart';
 
 enum ProcessingState { processing, completed }
+
+class ProcessingViewWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Processing>(builder: (context, model, _) {
+      return AnimatedOpacity(
+        opacity: model.processing == null ? 0 : 1,
+        duration: Duration(milliseconds: 300),
+        child: ProcessingView(
+          processingState: model.processing,
+          data: model.processingViewData,
+        ),
+      );
+    });
+  }
+}
 
 class ProcessingViewData {
   final String? processingTitle;
